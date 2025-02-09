@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lapor RT - RT 04 RW 03 Panggung Kidul</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .submit-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+        .panic-button {
+            background-color: #FF0000;
+            color: white;
+        }
+        .panic-button:hover {
+            background-color: #CC0000;
+        }
+        #loading {
+            display: none;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            let nama = document.getElementById("nama").value;
+            let alamat = document.getElementById("alamat").value;
+            let nohp = document.getElementById("nohp").value;
+            let laporan = document.getElementById("laporan").value;
+            
+            if (nama == "" || alamat == "" || nohp == "" || laporan == "") {
+                alert("Semua kolom wajib diisi!");
+                return false;
+            }
+            
+            if (!/^[0-9]+$/.test(nohp) || nohp.length < 10) {
+                alert("Nomor HP harus berupa angka dan minimal 10 digit!");
+                return false;
+            }
+            
+            return true;
+        }
+
+        function submitForm(event) {
+    event.preventDefault();
+    if (!validateForm()) return;
+    
+    let formData = {
+        nama: document.getElementById("nama").value,
+        alamat: document.getElementById("alamat").value,
+        nohp: document.getElementById("nohp").value,
+        laporan: document.getElementById("laporan").value
+    };
+    
+    console.log("Mengirim data:", formData);
+    
+    document.getElementById("loading").style.display = "block";
+    
+    fetch("https://usbuqyitfwrjxixadjeo.supabase.co/rest/v1/laporan", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json",
+            "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzYnVxeWl0ZndyanhpeGFkamVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkwNzQ0NzgsImV4cCI6MjA1NDY1MDQ3OH0.zl7GRNNqGV5XgRB-ELU88bk-NY-2X5ROIvqnPhUNbtM",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzYnVxeWl0ZndyanhpeGFkamVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkwNzQ0NzgsImV4cCI6MjA1NDY1MDQ3OH0.zl7GRNNqGV5XgRB-ELU88bk-NY-2X5ROIvqnPhUNbtM",
+            "Cache-Control": "no-cache, no-store, must-revalidate"
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Respon dari server:", data);
+        alert("Laporan berhasil dikirim!");
+        setTimeout(() => {
+            document.getElementById("laporForm").reset();
+        }, 500);
+        document.getElementById("loading").style.display = "none";
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Gagal mengirim laporan. Silakan coba lagi.");
+        document.getElementById("loading").style.display = "none";
+    });
+}
+
+function sendPanicReport() {
+    if (!confirm("Apakah Anda yakin ingin mengirim laporan darurat?")) return;
+    
+    let formData = {
+        nama: "Panic Button",
+        alamat: "Tidak diketahui",
+        nohp: "Tidak diketahui",
+        laporan: "LAPORAN DARURAT! Mohon segera ditindaklanjuti."
+    };
+    
+    console.log("Mengirim laporan darurat:", formData);
+    
+    fetch("https://usbuqyitfwrjxixadjeo.supabase.co/rest/v1/laporan", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json",
+            "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzYnVxeWl0ZndyanhpeGFkamVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkwNzQ0NzgsImV4cCI6MjA1NDY1MDQ3OH0.zl7GRNNqGV5XgRB-ELU88bk-NY-2X5ROIvqnPhUNbtM",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzYnVxeWl0ZndyanhpeGFkamVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkwNzQ0NzgsImV4cCI6MjA1NDY1MDQ3OH0.zl7GRNNqGV5XgRB-ELU88bk-NY-2X5ROIvqnPhUNbtM",
+            "Cache-Control": "no-cache, no-store, must-revalidate"
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Respon dari server:", data);
+        alert("Laporan darurat berhasil dikirim!");
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Gagal mengirim laporan darurat. Silakan coba lagi.");
+    });
+}
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Lapor RT</h1>
+        <p>Silakan isi formulir di bawah ini untuk melaporkan kejadian atau informasi penting kepada RT.</p>
+        
+        <form id="laporForm" onsubmit="submitForm(event)">
+            <label for="nama">Nama:</label>
+            <input type="text" id="nama" name="nama" required>
+            
+            <label for="alamat">Alamat:</label>
+            <input type="text" id="alamat" name="alamat" required>
+            
+            <label for="nohp">Nomor HP:</label>
+            <input type="number" id="nohp" name="nohp" required>
+            
+            <label for="laporan">Informasi/Laporan:</label>
+            <textarea id="laporan" name="laporan" rows="5" required></textarea>
+            
+            <button type="submit" class="submit-button">Kirim Laporan</button>
+            <p id="loading">Mengirim laporan...</p>
+        </form>
+        
+        <button class="panic-button" onclick="sendPanicReport()">🚨 Panic Button</button>
+    </div>
+</body>
+</html>
