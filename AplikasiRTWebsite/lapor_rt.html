@@ -61,7 +61,7 @@
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
         // Initialize EmailJS with your user ID (replace with your actual user ID)
-        emailjs.init("YOUR_USER_ID");
+        emailjs.init("Gmail");
 
         function validateForm() {
             let nama = document.getElementById("nama").value;
@@ -97,7 +97,7 @@
             document.getElementById("loading").style.display = "block";
             
             // Kirim data melalui EmailJS
-            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", formData)
+            emailjs.send("service_zvycoqa", "template_08oonwd", formData)
                 .then(function(response) {
                     console.log("Respon dari server:", response);
                     alert("Laporan berhasil dikirim!");
