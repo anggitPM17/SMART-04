@@ -10,11 +10,6 @@
       margin: 0;
       padding: 0;
       background-color: #f4f4f4;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      align-items: center;
-      justify-content: center;
       text-align: center;
     }
     .container {
@@ -23,10 +18,7 @@
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
       max-width: 600px;
-      margin: 20px;
-    }
-    h1 {
-      color: #2c3e50;
+      margin: 20px auto;
     }
     .btn {
       background-color: #4CAF50;
@@ -42,36 +34,43 @@
     .btn:hover {
       background-color: #45a049;
     }
-    .info-box {
-      background-color: #fff9c4;
-      color: #333;
-      padding: 15px;
-      border-radius: 8px;
+    .logout-btn {
+      background-color: #f44336;
       margin-top: 20px;
-      font-weight: bold;
-    }
-    footer {
-      margin-top: auto;
-      padding: 20px;
-      font-size: 14px;
-      color: #777;
     }
   </style>
 </head>
 <body>
+
   <div class="container">
-    <h1>Informasi Penting RT 04 RW 03 Panggung Kidul</h1>
+    <h1>Selamat Datang, <span id="user-name"></span></h1>
     <p>Website ini digunakan sebagai media komunikasi dan informasi bagi warga.</p>
     
-    <div class="info-box">
-      ⚠️ Rapat warga akan diadakan pada <strong>Minggu, 10 Februari 2025 pukul 19:00 WIB</strong> di Balai Warga.
-    </div>
+    <a href="beranda.html" class="btn">Masuk ke Halaman Utama</a>
 
-    <a href="main.html" class="btn">Masuk ke Halaman Utama</a>
+    <button class="btn logout-btn" onclick="logout()">Logout</button>
   </div>
 
-  <footer>
-    &copy; 2025 Website RT 04 RW 03 Panggung Kidul. Semua Hak Dilindungi.
-  </footer>
+  <script>
+    window.onload = function() {
+      const loggedIn = localStorage.getItem('loggedIn');
+      const username = localStorage.getItem('username');
+
+      if (loggedIn !== 'true') {
+        // Jika belum login, redirect ke halaman login
+        window.location.href = 'login.html';
+      } else {
+        // Tampilkan nama pengguna
+        document.getElementById('user-name').textContent = username;
+      }
+    };
+
+    function logout() {
+      localStorage.removeItem('loggedIn');
+      localStorage.removeItem('username');
+      window.location.href = 'login.html'; // Arahkan kembali ke halaman login setelah logout
+    }
+  </script>
+
 </body>
 </html>
