@@ -54,6 +54,15 @@
     textarea {
       resize: vertical;
     }
+    .alert-warning {
+      background-color: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+      border-radius: 8px;
+      padding: 10px 15px;
+      margin-top: 15px;
+      font-size: 14px;
+    }
     button {
       background-color: var(--success);
       color: white;
@@ -106,6 +115,10 @@
 
       <label for="laporan">Isi Laporan</label>
       <textarea id="laporan" name="laporan" rows="5" placeholder="Jelaskan laporan/informasi yang ingin disampaikan" required></textarea>
+
+      <div class="alert-warning">
+        ⚠️ Harap isi laporan dengan jujur dan jelas. Segala laporan yang dikirimkan dapat dipertanggungjawabkan oleh pengirim.
+      </div>
 
       <button type="submit">📨 Kirim Laporan</button>
       <p id="loading">⏳ Mengirim laporan...</p>
