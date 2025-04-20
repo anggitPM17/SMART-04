@@ -9,13 +9,23 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom right, #1e3c72, #2a5298);
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      background: 
+        repeating-linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0.05) 2px,
+          transparent 2px,
+          transparent 10px
+        ),
+        linear-gradient(to bottom right, #1e3c72, #ff416c);
+      background-size: cover;
       color: white;
     }
+
     .login-container {
       background: rgba(255, 255, 255, 0.1);
       padding: 30px;
@@ -25,17 +35,21 @@
       width: 100%;
       backdrop-filter: blur(10px);
     }
+
     h1 {
       text-align: center;
       margin-bottom: 20px;
     }
+
     .input-group {
       margin-bottom: 15px;
     }
+
     .input-group label {
       display: block;
       margin-bottom: 5px;
     }
+
     .input-group input {
       width: 100%;
       padding: 10px;
@@ -44,6 +58,7 @@
       background-color: rgba(255,255,255,0.9);
       color: #000;
     }
+
     .btn {
       background-color: #00c3ff;
       color: white;
@@ -56,9 +71,11 @@
       border: none;
       transition: background-color 0.3s ease;
     }
+
     .btn:hover {
       background-color: #0086b3;
     }
+
     #captcha-container {
       margin-top: 15px;
     }
@@ -77,12 +94,10 @@
         <label for="password">Password:</label>
         <input type="password" id="password" required />
       </div>
-
       <div class="input-group" id="captcha-container">
         <label for="captcha">Berapa hasil dari <span id="captcha-question"></span>?</label>
         <input type="text" id="captcha" required />
       </div>
-
       <button type="submit" class="btn">Login</button>
     </form>
   </div>
@@ -98,17 +113,15 @@
 
     // Proses login
     document.getElementById('login-form').addEventListener('submit', function (e) {
-      e.preventDefault(); // Mencegah reload halaman
+      e.preventDefault();
 
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
       const captchaInput = parseInt(document.getElementById('captcha').value);
 
-      // Validasi login dan captcha
       if (username === 'warga' && password === 'rt04') {
         if (captchaInput === correctAnswer) {
           alert('Login berhasil!');
-          // Simpan status login dan arahkan ke halaman lain
           localStorage.setItem('loggedIn', 'true');
           localStorage.setItem('username', username);
           window.location.href = 'index.html';
