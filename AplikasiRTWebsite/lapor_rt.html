@@ -111,7 +111,7 @@
       <p id="loading">⏳ Mengirim laporan...</p>
     </form>
 
-    <button class="back-button" onclick="goToHome()">🔙 Kembali ke Beranda</button>
+    <button class="back-button" onclick="goToHome()">🔙 Kembali ke Halaman Utama</button>
   </div>
 
   <footer>
@@ -125,7 +125,7 @@
 
       emailjs.sendForm("service_zvycoqa", "template_08oonwd", this) // 🔧 Ganti dengan ID milikmu
         .then(() => {
-          alert("✅ Laporan berhasil dikirim!");
+          alert("✅ Laporan berhasil dikirim! Laporan akan segera kami tindak lanjuti");
           this.reset();
           document.getElementById("loading").style.display = "none";
         }, (error) => {
@@ -136,7 +136,7 @@
     });
 
     function goToHome() {
-      window.location.href = "index.html"; // Ganti sesuai nama beranda kamu
+      window.location.href = "main.html"; // Ganti sesuai nama beranda kamu
     }
   </script>
 </body>
