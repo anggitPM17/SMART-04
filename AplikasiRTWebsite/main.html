@@ -163,6 +163,27 @@
       left: 50%;
       transform: translateX(-50%);
     }
+
+    .logout-container button {
+      background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradasi warna */
+      color: white;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .logout-container button:hover {
+      background: linear-gradient(to right, #feb47b, #ff7e5f); /* Ubah arah gradasi pada hover */
+      transform: scale(1.1);
+    }
+
+    .logout-container button:active {
+      transform: scale(0.98);
+    }
   </style>
 </head>
 <body>
@@ -211,7 +232,7 @@
   </div>
 
   <footer>
-    <div>&copy; 2025 Sekretatiat RT 04 Panggung Kidul | Dibuat dengan ❤️ untuk warga</div>
+    <div>&copy; 2025 RT 04 Panggung Kidul | Dibuat dengan ❤️ untuk warga</div>
   </footer>
 
   <div class="logout-container">
