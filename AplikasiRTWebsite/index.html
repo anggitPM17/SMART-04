@@ -1,76 +1,20 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Website RT 04 RW 03 Panggung Kidul</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      text-align: center;
-    }
-    .container {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-      max-width: 600px;
-      margin: 20px auto;
-    }
-    .btn {
-      background-color: #4CAF50;
-      color: white;
-      padding: 12px 24px;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 16px;
-      margin-top: 20px;
-      display: inline-block;
-      transition: background 0.3s;
-    }
-    .btn:hover {
-      background-color: #45a049;
-    }
-    .logout-btn {
-      background-color: #f44336;
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
+<script>
+  window.onload = function() {
+    const loggedIn = localStorage.getItem('loggedIn');
+    const username = localStorage.getItem('username');
 
-  <div class="container">
-    <h1>Selamat Datang, <span id="user-name"></span></h1>
-    <p>Website ini digunakan sebagai media komunikasi dan informasi bagi warga.</p>
-    
-    <a href="main.html" class="btn">Masuk ke Halaman Utama</a>
-
-    <button class="btn logout-btn" onclick="logout()">Logout</button>
-  </div>
-
-  <script>
-    window.onload = function() {
-      const loggedIn = localStorage.getItem('loggedIn');
-      const username = localStorage.getItem('username');
-
-      if (loggedIn !== 'true') {
-        // Jika belum login, redirect ke halaman login
-        window.location.href = 'login.html';
-      } else {
-        // Tampilkan nama pengguna
-        document.getElementById('user-name').textContent = username;
-      }
-    };
-
-    function logout() {
-      localStorage.removeItem('loggedIn');
-      localStorage.removeItem('username');
-      window.location.href = 'login.html'; // Arahkan kembali ke halaman login setelah logout
+    if (loggedIn !== 'true') {
+      // Jika belum login, redirect ke halaman login
+      window.location.href = 'main.html';
+    } else {
+      // Tampilkan nama pengguna
+      document.getElementById('user-name').textContent = username;
     }
-  </script>
+  };
 
-</body>
-</html>
+  function logout() {
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('username');
+    window.location.href = 'login.html';  // Arahkan kembali ke halaman login setelah logout
+  }
+</script>
