@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Lapor RT - RT Hebat 04</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lapor RT Hebat 04</title>
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script>
     (function(){
@@ -10,25 +11,104 @@
     })();
   </script>
   <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
-    .container { background: #fff; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    input, textarea { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
-    button { padding: 10px 20px; background: green; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
-    #loading { display: none; color: gray; font-size: 14px; }
+    :root {
+      --primary: #007bff;
+      --success: #28a745;
+      --danger: #dc3545;
+      --bg: #f9f9f9;
+      --card-bg: #ffffff;
+      --text-dark: #333;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-dark);
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 600;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    textarea {
+      resize: vertical;
+    }
+    button {
+      background-color: var(--success);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #loading {
+      display: none;
+      text-align: center;
+      margin-top: 10px;
+      font-style: italic;
+      font-size: 14px;
+      color: gray;
+    }
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #aaa;
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Formulir Laporan Warga</h2>
+    <h2>Form Laporan Warga - RT Hebat 04</h2>
     <form id="laporForm">
-      <input type="text" name="nama" placeholder="Nama" required />
-      <input type="text" name="alamat" placeholder="Alamat" required />
-      <input type="text" name="nohp" placeholder="No. HP" required />
-      <textarea name="laporan" placeholder="Isi Laporan..." rows="5" required></textarea>
-      <button type="submit">Kirim Laporan</button>
-      <p id="loading">Mengirim laporan...</p>
+      <label for="nama">Nama</label>
+      <input type="text" id="nama" name="nama" placeholder="Nama lengkap" required />
+
+      <label for="alamat">Alamat</label>
+      <input type="text" id="alamat" name="alamat" placeholder="Alamat rumah" required />
+
+      <label for="nohp">Nomor HP</label>
+      <input type="text" id="nohp" name="nohp" placeholder="08xxxxxxxxxx" required />
+
+      <label for="laporan">Isi Laporan</label>
+      <textarea id="laporan" name="laporan" rows="5" placeholder="Jelaskan laporan/informasi yang ingin disampaikan" required></textarea>
+
+      <button type="submit">📨 Kirim Laporan</button>
+      <p id="loading">⏳ Mengirim laporan...</p>
     </form>
   </div>
+
+  <footer>
+    &copy; 2025 RT 04 Panggung Kidul | Dibuat dengan ❤️ untuk warga
+  </footer>
 
   <script>
     document.getElementById("laporForm").addEventListener("submit", function(event) {
@@ -36,13 +116,13 @@
       document.getElementById("loading").style.display = "block";
 
       emailjs.sendForm("service_zvycoqa", "template_08oonwd", this)
-        .then(function() {
-          alert("Laporan berhasil dikirim!");
-          document.getElementById("laporForm").reset();
+        .then(() => {
+          alert("✅ Laporan berhasil dikirim!");
+          this.reset();
           document.getElementById("loading").style.display = "none";
-        }, function(error) {
-          console.error("Gagal mengirim", error);
-          alert("Gagal mengirim laporan. Silakan coba lagi.");
+        }, (error) => {
+          console.error("Gagal mengirim:", error);
+          alert("❌ Gagal mengirim laporan. Coba lagi ya.");
           document.getElementById("loading").style.display = "none";
         });
     });
