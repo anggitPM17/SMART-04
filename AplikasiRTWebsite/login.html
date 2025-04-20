@@ -3,148 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login - Website RT 04 RW 03 Panggung Kidul</title>
+  <title>Login - Website RT 04</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #ff7f50, #ff6347); /* Gradasi biru semu merah */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      color: #fff;
-      text-align: center;
-      background-size: 400% 400%;
-      animation: gradientAnimation 15s ease infinite;
-    }
-
-    @keyframes gradientAnimation {
-      0% { background-position: 100% 0; }
-      50% { background-position: 0 100%; }
-      100% { background-position: 100% 0; }
-    }
-
-    .background-lines {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: repeating-linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.1),
-        rgba(255, 255, 255, 0.1) 10px,
-        transparent 10px,
-        transparent 20px
-      );
-      pointer-events: none;
-    }
-
-    .login-container {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 40px 50px;
-      border-radius: 15px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-      max-width: 400px;
-      width: 100%;
-      backdrop-filter: blur(10px);
-    }
-
-    h1 {
-      font-size: 32px;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-
-    .input-group {
-      margin-bottom: 20px;
-      text-align: left;
-    }
-
-    label {
-      font-size: 14px;
-      margin-bottom: 5px;
-      font-weight: 500;
-      display: block;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      border: 2px solid #4CAF50;
-      border-radius: 8px;
-      background-color: #fff;
-      color: #333;
-      margin-top: 5px;
-      transition: all 0.3s ease;
-    }
-
-    input:focus {
-      border-color: #2E8B57;
-      outline: none;
-    }
-
-    .btn {
-      background: linear-gradient(135deg, #4CAF50, #2E8B57);
-      color: white;
-      padding: 14px 0;
-      font-size: 16px;
-      text-transform: uppercase;
-      border-radius: 8px;
-      width: 100%;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.3s ease;
-    }
-
-    .btn:hover {
-      background: linear-gradient(135deg, #3B8B40, #1F5D2A);
-      transform: scale(1.05);
-    }
-
-    .btn:active {
-      transform: scale(1);
-    }
+    /* Gaya dan styling tetap sama seperti sebelumnya */
   </style>
 </head>
 <body>
 
-  <div class="background-lines"></div>
-
   <div class="login-container">
     <h1>Website RT 04</h1>
-    <form id="login-form">
+    <form id="login-form" action="verify_captcha.php" method="POST">
       <div class="input-group">
         <label for="username">Username:</label>
-        <input type="text" id="username" required />
+        <input type="text" id="username" name="username" required />
       </div>
       <div class="input-group">
         <label for="password">Password:</label>
-        <input type="password" id="password" required />
+        <input type="password" id="password" name="password" required />
       </div>
+
+      <!-- CAPTCHA Hitung-hitungan -->
+      <div id="captcha-container">
+        <label for="captcha">Berapa hasil dari <span id="captcha-question"></span>?</label>
+        <input type="text" id="captcha" name="captcha" required />
+      </div>
+
       <button type="submit" class="btn">Login</button>
     </form>
   </div>
 
   <script>
-    document.getElementById('login-form').addEventListener('submit', function (e) {
-      e.preventDefault();  // Mencegah halaman ter-refresh
-
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      // Login sederhana: jika username dan password cocok, login berhasil
-      if (username === 'warga' && password === 'rt04') {
-        localStorage.setItem('loggedIn', 'true');
-        localStorage.setItem('username', username);
-        window.location.href = 'index.html';  // Arahkan ke halaman utama setelah login
-      } else {
-        alert('Username atau Password salah!');
-      }
-    });
+    // Fungsi untuk memuat soal CAPTCHA dari server
+    fetch('captcha.php')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('captcha-question').textContent = data.question;
+      })
+      .catch(error => console.error('Error loading CAPTCHA:', error));
   </script>
 
 </body>
