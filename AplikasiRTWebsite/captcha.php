@@ -12,6 +12,6 @@ $answer = $angka1 + $angka2;
 // Menyimpan jawaban yang benar di sesi
 $_SESSION['captcha_answer'] = $answer;
 
-// Menampilkan soal matematika pada halaman
+// Mengirimkan soal dalam format JSON ke klien
 echo json_encode(['question' => $question]);
 ?>
