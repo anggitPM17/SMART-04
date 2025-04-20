@@ -1,139 +1,51 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lapor RT - RT 04 RW 03 Panggung Kidul</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            text-align: center;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 20px auto;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-        }
-        label {
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .submit-button {
-            background-color: #4CAF50;
-            color: white;
-        }
-        .submit-button:hover {
-            background-color: #45a049;
-        }
-        #loading {
-            display: none;
-            margin-top: 10px;
-            font-size: 14px;
-            color: #555;
-        }
-    </style>
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script>
-        // Initialize EmailJS with your user ID (replace with your actual user ID)
-        emailjs.init("owB2ya-dc8UcG0rOp");
-
-        function validateForm() {
-            let nama = document.getElementById("nama").value;
-            let alamat = document.getElementById("alamat").value;
-            let nohp = document.getElementById("nohp").value;
-            let laporan = document.getElementById("laporan").value;
-            
-            if (nama == "" || alamat == "" || nohp == "" || laporan == "") {
-                alert("Semua kolom wajib diisi!");
-                return false;
-            }
-            
-            if (!/^[0-9]+$/.test(nohp) || nohp.length < 10) {
-                alert("Nomor HP harus berupa angka dan minimal 10 digit!");
-                return false;
-            }
-            
-            return true;
-        }
-
-        function submitForm(event) {
-            event.preventDefault();
-            if (!validateForm()) return;
-            
-            let formData = {
-                nama: document.getElementById("nama").value,
-                alamat: document.getElementById("alamat").value,
-                nohp: document.getElementById("nohp").value,
-                laporan: document.getElementById("laporan").value
-            };
-
-            console.log("Mengirim data:", formData);
-            document.getElementById("loading").style.display = "block";
-            
-            // Kirim data melalui EmailJS
-            emailjs.send("service_zvycoqa", "template_08oonwd", formData)
-                .then(function(response) {
-                    console.log("Respon dari server:", response);
-                    alert("Laporan berhasil dikirim!");
-                    setTimeout(() => {
-                        document.getElementById("laporForm").reset();
-                    }, 500);
-                    document.getElementById("loading").style.display = "none";
-                }, function(error) {
-                    console.error("Error:", error);
-                    alert("Gagal mengirim laporan. Silakan coba lagi.");
-                    document.getElementById("loading").style.display = "none";
-                });
-        }
-    </script>
+  <meta charset="UTF-8">
+  <title>Lapor RT - RT Hebat 04</title>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("owB2ya-dc8UcG0rOp"); // Ganti dengan Public Key kamu
+    })();
+  </script>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    .container { background: #fff; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    input, textarea { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
+    button { padding: 10px 20px; background: green; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    #loading { display: none; color: gray; font-size: 14px; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Lapor RT</h1>
-        <p>Silakan isi formulir di bawah ini untuk melaporkan kejadian atau informasi penting kepada RT.</p>
-        
-        <form id="laporForm" onsubmit="submitForm(event)">
-            <label for="nama">Nama:</label>
-            <input type="text" id="nama" name="nama" required>
-            
-            <label for="alamat">Alamat:</label>
-            <input type="text" id="alamat" name="alamat" required>
-            
-            <label for="nohp">Nomor HP:</label>
-            <input type="text" id="nohp" name="nohp" required>
-            
-            <label for="laporan">Informasi/Laporan:</label>
-            <textarea id="laporan" name="laporan" rows="5" required></textarea>
-            
-            <button type="submit" class="submit-button">Kirim Laporan</button>
-            <p id="loading">Mengirim laporan...</p>
-        </form>
-    </div>
+  <div class="container">
+    <h2>Formulir Laporan Warga</h2>
+    <form id="laporForm">
+      <input type="text" name="nama" placeholder="Nama" required />
+      <input type="text" name="alamat" placeholder="Alamat" required />
+      <input type="text" name="nohp" placeholder="No. HP" required />
+      <textarea name="laporan" placeholder="Isi Laporan..." rows="5" required></textarea>
+      <button type="submit">Kirim Laporan</button>
+      <p id="loading">Mengirim laporan...</p>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("laporForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      document.getElementById("loading").style.display = "block";
+
+      emailjs.sendForm("service_zvycoqa", "template_08oonwd", this)
+        .then(function() {
+          alert("Laporan berhasil dikirim!");
+          document.getElementById("laporForm").reset();
+          document.getElementById("loading").style.display = "none";
+        }, function(error) {
+          console.error("Gagal mengirim", error);
+          alert("Gagal mengirim laporan. Silakan coba lagi.");
+          document.getElementById("loading").style.display = "none";
+        });
+    });
+  </script>
 </body>
 </html>
