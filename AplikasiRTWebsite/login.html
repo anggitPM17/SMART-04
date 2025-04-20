@@ -1,93 +1,77 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SMART RT04</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            width: 100%;
-            max-width: 400px;
-            margin: 50px auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 12px;
-            color: #888;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Website RT 04 RW 03 Panggung Kidul</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      max-width: 400px;
+      margin: 100px auto;
+    }
+    input[type="text"], input[type="password"] {
+      padding: 12px;
+      margin: 10px;
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      margin-top: 20px;
+    }
+    .btn:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Login ke SMART RT04</h2>
-        <form id="loginForm">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Masukkan username" required>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Masukkan password" required>
+  <div class="container">
+    <h1>Login</h1>
+    <form id="login-form">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit" class="btn">Login</button>
+    </form>
+  </div>
 
-            <button type="submit">Login</button>
-        </form>
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();  // Mencegah form melakukan refresh otomatis
 
-        <div class="footer">
-            <p>&copy; 2025 SMART RT04. Semua hak dilindungi.</p>
-        </div>
-    </div>
+      // Ambil nilai dari input form
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
 
-    <script>
-        document.getElementById("loginForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+      // Cek login (sederhana, bisa diubah sesuai kebutuhan)
+      if (username === 'admin' && password === 'admin123') {
+        // Menyimpan status login di localStorage
+        localStorage.setItem('loggedIn', 'true');
+        localStorage.setItem('username', username);
 
-            // Cek kredensial
-            if (username === "Warga" && password === "RT04") {
-                // Set status login di localStorage
-                localStorage.setItem("isLoggedIn", "true");
-                localStorage.setItem("username", username);
-                
-                // Redirect ke halaman utama
-                window.location.href = "Index.html";
-            } else {
-                alert("Username atau password salah. Coba lagi.");
-            }
-        });
-    </script>
+        // Arahkan ke halaman utama setelah login berhasil
+        window.location.href = 'index.html';  // Ganti sesuai dengan halaman tujuan
+      } else {
+        alert('Username atau password salah!');
+      }
+    });
+  </script>
+
 </body>
 </html>
