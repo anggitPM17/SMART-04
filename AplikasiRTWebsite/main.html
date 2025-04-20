@@ -156,6 +156,12 @@
     footer button:hover {
       background-color: #d32f2f;
     }
+    .logout-container {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   </style>
 </head>
 <body>
@@ -205,8 +211,11 @@
 
   <footer>
     <div>&copy; 2025 RT 04 Panggung Kidul | Dibuat dengan ❤️ untuk warga</div>
-    <button onclick="logout()">Logout</button>
   </footer>
+
+  <div class="logout-container">
+    <button onclick="logout()">Logout</button>
+  </div>
 
   <script>
     function toggleDarkMode() {
@@ -286,7 +295,7 @@
       }
     });
 
-    // Fungsi Logout
+    // Fungsi logout
     function logout() {
       localStorage.removeItem('loggedIn');
       localStorage.removeItem('username');
