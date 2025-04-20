@@ -9,13 +9,37 @@
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #4CAF50, #2E8B57);
+      background: linear-gradient(135deg, #ff7f50, #ff6347); /* Gradasi biru semu merah */
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       color: #fff;
       text-align: center;
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite;
+    }
+
+    @keyframes gradientAnimation {
+      0% { background-position: 100% 0; }
+      50% { background-position: 0 100%; }
+      100% { background-position: 100% 0; }
+    }
+
+    .background-lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.1) 10px,
+        transparent 10px,
+        transparent 20px
+      );
+      pointer-events: none;
     }
 
     .login-container {
@@ -87,6 +111,8 @@
   </style>
 </head>
 <body>
+
+  <div class="background-lines"></div>
 
   <div class="login-container">
     <h1>Login</h1>
