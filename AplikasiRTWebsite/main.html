@@ -33,22 +33,6 @@
         .header-logo {
             height: 70px;
         }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 20px auto;
-        }
-        body.dark-mode .container {
-            background: #333;
-            color: white;
-        }
-        canvas {
-            max-width: 100%;
-            height: 300px !important;
-        }
         .menu {
             display: flex;
             justify-content: center;
@@ -114,26 +98,35 @@
             border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
+        /* Styling untuk Berita */
         #berita {
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-align: center;
+            padding: 20px;
         }
         #berita ul {
             list-style-type: none;
             padding: 0;
             text-align: left;
+            width: 80%;
+            margin: 0 auto;
         }
         #berita ul li {
             margin-bottom: 10px;
             background-color: #e3e3e3;
             padding: 10px;
             border-radius: 5px;
-            width: 80%;
-            margin: 10px 0;
         }
         #berita h2 {
             font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        /* Styling untuk chart */
+        canvas {
+            max-width: 100%;
+            height: 300px !important;
         }
     </style>
 </head>
@@ -142,4 +135,97 @@
         <img src="Gambar/Garuda1.png" alt="Garuda Indonesia" class="header-logo">
         <span>Website RT 04 RW 03 Panggung Kidul</span>
         <img src="Gambar/Lambang_Kota_Semarang.png" alt="Pemerintah Kota Semarang" class="header-logo">
-    </
+    </header>
+    
+    <div class="menu">
+        <a href="#beranda" class="active">Beranda</a>
+        <a href="#profil">Profil</a>
+        <a href="#berita">Berita</a>
+        <a href="#keuangan">Keuangan</a>
+        <a href="#lapor_rt">Lapor RT</a>
+    </div>
+    
+    <!-- Halaman Utama -->
+    <section id="beranda">
+        <h1>Data Warga</h1>
+        <div class="container">
+            <canvas id="wargaChart"></canvas>
+        </div>
+    </section>
+    
+    <!-- Halaman Berita -->
+    <section id="berita">
+        <h2>Berita Terkini</h2>
+        <ul>
+            <li><strong>10 April 2025:</strong> Gotong royong akan dilakukan di lingkungan RT.</li>
+            <li><strong>5 April 2025:</strong> Posyandu balita sukses diselenggarakan oleh kader kesehatan.</li>
+            <li><strong>1 April 2025:</strong> Rapat warga membahas keamanan malam hari.</li>
+        </ul>
+    </section>
+    
+    <div class="toggle-container">
+        <span>🌞</span>
+        <div class="toggle-switch" onclick="toggleDarkMode()"></div>
+        <span>🌙</span>
+    </div>
+    
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            updateChartTextColor();
+        }
+        
+        function updateChartTextColor() {
+            let chart = Chart.getChart("wargaChart");
+            if (chart) {
+                chart.options.scales.x.ticks.color = document.body.classList.contains('dark-mode') ? 'white' : 'black';
+                chart.options.scales.y.ticks.color = document.body.classList.contains('dark-mode') ? 'white' : 'black';
+                chart.update();
+            }
+        }
+        
+        window.onload = function() {
+            const ctx = document.getElementById('wargaChart').getContext('2d');
+            const totalWarga = 50 + 70 + 120 + 40;
+            const wargaChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Anak-anak', 'Remaja', 'Dewasa', 'Lansia'],
+                    datasets: [{
+                        label: 'Jumlah Warga',
+                        data: [50, 70, 120, 40],
+                        backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4caf50'],
+                        borderColor: ['#ff6384', '#36a2eb', '#ffce56', '#4caf50'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    aspectRatio: 2,
+                    scales: {
+                        x: {
+                            ticks: { color: 'black' }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: 'black' }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    let jumlah = tooltipItem.raw;
+                                    let persen = ((jumlah / totalWarga) * 100).toFixed(2);
+                                    return `Jumlah: ${jumlah} (${persen}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>
