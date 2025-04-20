@@ -9,22 +9,25 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      background: linear-gradient(to bottom right, #1e3c72, #2a5298);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      color: white;
     }
     .login-container {
-      background: white;
+      background: rgba(255, 255, 255, 0.1);
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
       max-width: 400px;
       width: 100%;
+      backdrop-filter: blur(10px);
     }
     h1 {
       text-align: center;
+      margin-bottom: 20px;
     }
     .input-group {
       margin-bottom: 15px;
@@ -36,11 +39,13 @@
     .input-group input {
       width: 100%;
       padding: 10px;
-      border: 1px solid #ccc;
+      border: none;
       border-radius: 5px;
+      background-color: rgba(255,255,255,0.9);
+      color: #000;
     }
     .btn {
-      background-color: #4CAF50;
+      background-color: #00c3ff;
       color: white;
       padding: 12px 24px;
       text-decoration: none;
@@ -48,13 +53,14 @@
       font-size: 16px;
       width: 100%;
       cursor: pointer;
+      border: none;
+      transition: background-color 0.3s ease;
     }
     .btn:hover {
-      background-color: #45a049;
+      background-color: #0086b3;
     }
     #captcha-container {
-      margin-top: 20px;
-      text-align: center;
+      margin-top: 15px;
     }
   </style>
 </head>
@@ -62,20 +68,19 @@
 
   <div class="login-container">
     <h1>Website RT 04</h1>
-    <form id="login-form" action="verify_captcha.php" method="POST">
+    <form id="login-form">
       <div class="input-group">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required />
+        <input type="text" id="username" required />
       </div>
       <div class="input-group">
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
+        <input type="password" id="password" required />
       </div>
 
-      <!-- CAPTCHA Hitung-hitungan -->
-      <div id="captcha-container">
+      <div class="input-group" id="captcha-container">
         <label for="captcha">Berapa hasil dari <span id="captcha-question"></span>?</label>
-        <input type="text" id="captcha" name="captcha" required />
+        <input type="text" id="captcha" required />
       </div>
 
       <button type="submit" class="btn">Login</button>
@@ -83,16 +88,37 @@
   </div>
 
   <script>
-    // Memuat soal CAPTCHA dari captcha.php
-    fetch('captcha.php')
-      .then(response => response.json())
-      .then(data => {
-        // Menampilkan soal pada elemen dengan id "captcha-question"
-        document.getElementById('captcha-question').textContent = data.question;
-      })
-      .catch(error => {
-        console.error('Error loading CAPTCHA:', error);
-      });
+    // Generate angka acak untuk soal matematika
+    let a = Math.floor(Math.random() * 10) + 1;
+    let b = Math.floor(Math.random() * 10) + 1;
+    let correctAnswer = a + b;
+
+    // Tampilkan soal
+    document.getElementById('captcha-question').textContent = `${a} + ${b}`;
+
+    // Proses login
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+      e.preventDefault(); // Mencegah reload halaman
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const captchaInput = parseInt(document.getElementById('captcha').value);
+
+      // Validasi login dan captcha
+      if (username === 'warga' && password === 'rt04') {
+        if (captchaInput === correctAnswer) {
+          alert('Login berhasil!');
+          // Simpan status login dan arahkan ke halaman lain
+          localStorage.setItem('loggedIn', 'true');
+          localStorage.setItem('username', username);
+          window.location.href = 'index.html';
+        } else {
+          alert('Jawaban captcha salah!');
+        }
+      } else {
+        alert('Username atau password salah!');
+      }
+    });
   </script>
 
 </body>
