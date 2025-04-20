@@ -5,7 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Website RT 04</title>
   <style>
-    /* Gaya dan styling tetap sama seperti sebelumnya */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 {
+      text-align: center;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 16px;
+      width: 100%;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #45a049;
+    }
+    #captcha-container {
+      margin-top: 20px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -33,13 +83,16 @@
   </div>
 
   <script>
-    // Fungsi untuk memuat soal CAPTCHA dari server
+    // Memuat soal CAPTCHA dari captcha.php
     fetch('captcha.php')
       .then(response => response.json())
       .then(data => {
+        // Menampilkan soal pada elemen dengan id "captcha-question"
         document.getElementById('captcha-question').textContent = data.question;
       })
-      .catch(error => console.error('Error loading CAPTCHA:', error));
+      .catch(error => {
+        console.error('Error loading CAPTCHA:', error);
+      });
   </script>
 
 </body>
