@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman utama - RT 04 RW 03 Panggung Kidul</title>
+    <title>Halaman Utama & Berita - RT 04 RW 03 Panggung Kidul</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <style>
         body {
@@ -107,6 +107,13 @@
         body.dark-mode .toggle-switch::before {
             left: 20px;
         }
+        section {
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -115,18 +122,30 @@
         <span>Website RT 04 RW 03 Panggung Kidul</span>
         <img src="Gambar/Lambang_Kota_Semarang.png" alt="Pemerintah Kota Semarang" class="header-logo">
     </header>
+    
     <div class="menu">
-        <a href="beranda.html" class="active">Beranda</a>
-        <a href="profil.html">Profil</a>
-        <a href="berita.html">Berita</a>
-        <a href="keuangan.html">Keuangan</a>
-        <a href="lapor_rt.html">Lapor RT</a>
+        <a href="#beranda" class="active">Beranda</a>
+        <a href="#profil">Profil</a>
+        <a href="#berita">Berita</a>
+        <a href="#keuangan">Keuangan</a>
+        <a href="#lapor_rt">Lapor RT</a>
     </div>
     
-    <div class="container">
+    <!-- Halaman Utama -->
+    <section id="beranda">
         <h1>Data Warga</h1>
         <canvas id="wargaChart"></canvas>
-    </div>
+    </section>
+    
+    <!-- Halaman Berita -->
+    <section id="berita">
+        <h2>Berita Terkini</h2>
+        <ul>
+            <li><strong>10 April 2025:</strong> Gotong royong akan dilakukan di lingkungan RT.</li>
+            <li><strong>5 April 2025:</strong> Posyandu balita sukses diselenggarakan oleh kader kesehatan.</li>
+            <li><strong>1 April 2025:</strong> Rapat warga membahas keamanan malam hari.</li>
+        </ul>
+    </section>
     
     <div class="toggle-container">
         <span>🌞</span>
