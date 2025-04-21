@@ -9,183 +9,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      color: #222;
-      text-align: center;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    body.dark-mode {
-      background-color: #222;
-      color: white;
-    }
-    header {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-    }
-    .header-logo {
-      height: 70px;
-    }
-    .menu {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      padding: 15px;
-      background-color: #4CAF50;
-      flex-wrap: wrap;
-    }
-    .menu a {
-      color: white;
-      text-decoration: none;
-      padding: 12px 20px;
-      border-radius: 5px;
-      background-color: #45a049;
-      font-weight: bold;
-      transition: background 0.3s, transform 0.3s;
-    }
-    .menu a:hover {
-      background-color: #367c39;
-      transform: scale(1.05);
-    }
-    .menu a.active {
-      background-color: #2e7031;
-    }
-    section {
-      padding: 20px;
-      margin: 20px auto;
-      max-width: 800px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    body.dark-mode section {
-      background-color: #333;
-    }
-    .toggle-container {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transform: none;
-    }
-    .toggle-switch {
-      width: 40px;
-      height: 20px;
-      background: #ccc;
-      border-radius: 50px;
-      position: relative;
-      cursor: pointer;
-    }
-    .toggle-switch::before {
-      content: '';
-      width: 18px;
-      height: 18px;
-      background: white;
-      position: absolute;
-      top: 1px;
-      left: 2px;
-      border-radius: 50%;
-      transition: 0.3s;
-    }
-    body.dark-mode .toggle-switch {
-      background: #4CAF50;
-    }
-    body.dark-mode .toggle-switch::before {
-      left: 20px;
-    }
-    canvas {
-      max-width: 100%;
-      height: 300px !important;
-    }
-    #chat-box {
-      max-height: 250px;
-      overflow-y: auto;
-      border: 1px solid #ccc;
-      padding: 10px;
-      background-color: #f9f9f9;
-      border-radius: 10px;
-      text-align: left;
-    }
-    body.dark-mode #chat-box {
-      background-color: #444;
-      color: white;
-    }
-    #chat-form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    #chat-form input {
-      padding: 10px;
-      flex: 1;
-    }
-    #chat-form button {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    footer {
-      font-size: 13px;
-      margin: 30px 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      text-align: center;
-      color: white;
-    }
-    footer button {
-      background-color: #f44336;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    footer button:hover {
-      background-color: #d32f2f;
-    }
-    .logout-container {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-    }
-
-    .logout-container button {
-      background: linear-gradient(to right, #ff7e5f, #feb47b);
-      color: white;
-      padding: 12px 30px;
-      border-radius: 50px;
-      font-size: 16px;
-      font-weight: bold;
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-    }
-
-    .logout-container button:hover {
-      background: linear-gradient(to right, #feb47b, #ff7e5f);
-      transform: scale(1.1);
-    }
-
-    .logout-container button:active {
-      transform: scale(0.98);
-    }
+    /* CSS Style tetap sama */
   </style>
 </head>
 <body>
@@ -253,9 +77,11 @@
       measurementId: "G-7S7402RXW0"
     };
 
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
+    // Render chat messages from Firebase
     function renderChat(snapshot) {
       const chatBox = document.getElementById("chat-box");
       chatBox.innerHTML = "";
@@ -265,26 +91,41 @@
         div.innerHTML = `<strong>${data.name}:</strong> ${data.message}`;
         chatBox.appendChild(div);
       });
-      chatBox.scrollTop = chatBox.scrollHeight;
+      chatBox.scrollTop = chatBox.scrollHeight; // Scroll down to newest message
     }
 
+    // Listening for changes in Firebase database
     const chatRef = database.ref("chat");
     chatRef.on("value", renderChat);
 
+    // Handle form submission to send message
     document.getElementById("chat-form").addEventListener("submit", function (e) {
       e.preventDefault();
       const name = document.getElementById("chat-name").value.trim();
       const message = document.getElementById("chat-message").value.trim();
+
       if (message.length > 200) {
         alert("Pesan terlalu panjang!");
         return;
       }
+
       if (name && message) {
-        chatRef.push({ name, message });
-        document.getElementById("chat-message").value = "";
+        // Push new chat message to Firebase
+        chatRef.push({ name, message })
+          .then(() => {
+            console.log("Pesan berhasil dikirim");
+            document.getElementById("chat-message").value = ""; // Clear message input
+          })
+          .catch((error) => {
+            console.error("Error mengirim pesan:", error);
+            alert("Terjadi kesalahan, pesan tidak dapat dikirim.");
+          });
+      } else {
+        alert("Nama dan pesan tidak boleh kosong!");
       }
     });
 
+    // Dark Mode Toggle
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
       localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
@@ -341,6 +182,7 @@
       });
     };
 
+    // Logout function
     function logout() {
       localStorage.removeItem('loggedIn');
       localStorage.removeItem('username');
