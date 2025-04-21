@@ -312,15 +312,15 @@
       e.preventDefault();
       const name = chatName.value.trim();
       const message = chatMessage.value.trim();
-      if (name && message) {
+     if (message.length > 200) {
+        alert("Pesan terlalu panjang!");
+        return;
+      }
+     if (name && message) {
         savedChats.push({ name, message });
         localStorage.setItem('chatWarga', JSON.stringify(savedChats));
         renderChat();
         chatMessage.value = '';
-      }
-      if (message.length > 200) {
-        alert("Pesan terlalu panjang!");
-        return;
       }
     });
 
