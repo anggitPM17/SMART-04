@@ -280,6 +280,31 @@
     const app = firebase.initializeApp(firebaseConfig);
     const database = firebase.database(app);
 
+    // Chart.js configuration
+    const ctx = document.getElementById('wargaChart').getContext('2d');
+    const wargaChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Jumlah Warga Laki-laki', 'Jumlah Warga Perempuan', 'Jumlah Warga Anak', 'Jumlah Warga Lansia'],
+        datasets: [{
+          label: 'Statistik Warga RT 04',
+          data: [50, 45, 30, 10], // Gantilah dengan data yang sesuai dengan kebutuhan
+          backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#9C27B0'],
+          borderColor: ['#388E3C', '#F57C00', '#1976D2', '#7B1FA2'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+
     // Render chat messages from Firebase
     function renderChat(snapshot) {
       const chatBox = document.getElementById("chat-box");
