@@ -240,6 +240,7 @@
     };
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
+    console.log("Firebase Initialized", database);
 
     // Chat
     const chatRef = database.ref("chat");
