@@ -274,44 +274,56 @@
   });
 
     // Chart
-    window.addEventListener("load", () => {
-      const ctx = document.getElementById("wargaChart").getContext("2d");
-      const data = [50, 70, 120, 40];
-      const total = data.reduce((a, b) => a + b, 0);
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const canvas = document.getElementById("wargaChart");
+    if (!canvas) {
+      console.error("Elemen canvas dengan id 'wargaChart' tidak ditemukan.");
+      return;
+    }
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      console.error("Tidak dapat memperoleh context dari elemen canvas.");
+      return;
+    }
 
-      new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: ["Anak-anak", "Remaja", "Dewasa", "Lansia"],
-          datasets: [{
-            label: "Jumlah",
-            data: data,
-            backgroundColor: ["#ff6384", "#36a2eb", "#ffce56", "#4caf50"]
-          }]
+    const data = [50, 70, 120, 40];
+    const total = data.reduce((a, b) => a + b, 0);
+
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: ["Anak-anak", "Remaja", "Dewasa", "Lansia"],
+        datasets: [{
+          label: "Jumlah",
+          data: data,
+          backgroundColor: ["#ff6384", "#36a2eb", "#ffce56", "#4caf50"]
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: { ticks: { color: "black" } },
+          y: {
+            beginAtZero: true,
+            ticks: { color: "black" }
+          }
         },
-        options: {
-          responsive: true,
-          scales: {
-            x: { ticks: { color: "black" } },
-            y: {
-              beginAtZero: true,
-              ticks: { color: "black" }
-            }
-          },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: function (tooltipItem) {
-                  const jumlah = tooltipItem.raw;
-                  const persen = ((jumlah / total) * 100).toFixed(2);
-                  return `Jumlah: ${jumlah} (${persen}%)`;
-                }
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function (tooltipItem) {
+                const jumlah = tooltipItem.raw;
+                const persen = ((jumlah / total) * 100).toFixed(2);
+                return `Jumlah: ${jumlah} (${persen}%)`;
               }
             }
           }
         }
-      });
+      }
     });
+  });
+</script>
 
     // Dark mode
     function toggleDarkMode() {
