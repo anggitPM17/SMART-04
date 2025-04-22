@@ -256,14 +256,18 @@
     });
 
     document.getElementById("chat-form").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const name = document.getElementById("chat-name").value.trim();
-      const message = document.getElementById("chat-message").value.trim();
-      if (name && message) {
-        chatRef.push({ name, message });
-        document.getElementById("chat-message").value = "";
-      }
-    });
+  e.preventDefault();
+  const name = document.getElementById("chat-name").value.trim();
+  const message = document.getElementById("chat-message").value.trim();
+
+  // Menambahkan log untuk memeriksa data
+  console.log({ name, message });
+
+  if (name && message) {
+    chatRef.push({ name, message });
+    document.getElementById("chat-message").value = "";
+  }
+  });
 
     // Chart
     window.addEventListener("load", () => {
