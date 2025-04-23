@@ -229,6 +229,9 @@
   </div>
 
   <script>
+  import firebase from "firebase/compat/app";
+  import "firebase/compat/database";
+    
    // Firebase setup
   const firebaseConfig = {
   apiKey: "AIzaSyBig-DId65hCph6j-tFG0Mdd6DhXasFu3E",
@@ -241,8 +244,11 @@
   };
 
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  const app = firebase.initializeApp(firebaseConfig);
 
+  // Akses database setelah inisialisasi
+  const database = app.database();
+    
   // Set the database URL with the correct region
   const database = firebase.database("https://chat-rt04-default-rtdb.asia-southeast1.firebasedatabase.app");
 
