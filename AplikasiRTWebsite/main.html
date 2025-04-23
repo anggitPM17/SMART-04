@@ -267,11 +267,11 @@ const database = firebase.database();
     const data = snapshot.val();
     const chatBox = document.getElementById('chat-box');
     const p = document.createElement('p');
-    const waktu = new Date(data.waktu).toLocaleTimeString("id-ID", {
-       hour: '2-digit',
-       minute: '2-digit',
+    const waktuLengkap = new Date(data.waktu).toLocaleString("id-ID", {
+       dateStyle: "medium",
+       timeStyle: "short",
        hour12: false
-  }) + " WIB";
+    }) + " WIB";
 
     p.textContent = `[${waktu}] ${data.nama}: ${data.pesan}`;
     chatBox.appendChild(p);
