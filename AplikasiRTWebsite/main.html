@@ -268,8 +268,12 @@ const database = firebase.database();
     const chatBox = document.getElementById('chat-box');
     const p = document.createElement('p');
     const waktuLengkap = new Date(data.waktu).toLocaleString("id-ID", {
-       dateStyle: "medium",
-       timeStyle: "short",
+       year: 'numeric',
+       month: 'long',
+       day: 'numeric',
+       hour: '2-digit',
+       minute: '2-digit',
+       second: '2-digit',
        hour12: false
     }) + " WIB";
 
