@@ -243,10 +243,10 @@
   };
 
   // Inisialisasi Firebase
-  firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 
-  // Ambil referensi database
-  const db = firebase.database();
+// Akses database (cukup seperti ini saja)
+const database = firebase.database();
 
   // Kirim pesan ke database
   document.getElementById('chat-form').addEventListener('submit', function(e) {
