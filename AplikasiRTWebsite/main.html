@@ -229,47 +229,50 @@
   </div>
 
   <script>
-   // Firebase setup
+   <script>
+  // Konfigurasi Firebase
   const firebaseConfig = {
-  apiKey: "AIzaSyBig-DId65hCph6j-tFG0Mdd6DhXasFu3E",
-  authDomain: "chat-rt04.firebaseapp.com",
-  projectId: "chat-rt04",
-  storageBucket: "chat-rt04.appspot.com",
-  messagingSenderId: "817426606478",
-  appId: "1:817426606478:web:8f2e6516822b80072f5cdf",
-  measurementId: "G-7S7402RXW0"
+    apiKey: "AIzaSyBig-DId65hCph6j-tFG0Mdd6DhXasFu3E",
+    authDomain: "chat-rt04.firebaseapp.com",
+    databaseURL: "https://chat-rt04-default-rtdb.asia-southeast1.firebasedatabase.app", // penting!
+    projectId: "chat-rt04",
+    storageBucket: "chat-rt04.appspot.com",
+    messagingSenderId: "817426606478",
+    appId: "1:817426606478:web:8f2e6516822b80072f5cdf",
+    measurementId: "G-7S7402RXW0"
   };
 
-  // Initialize Firebase
-  const app = firebase.initializeApp(firebaseConfig);
-    
-  // Set the database URL with the correct region
-  const database = firebase.database("https://chat-rt04-default-rtdb.asia-southeast1.firebasedatabase.app");
+  // Inisialisasi Firebase
+  firebase.initializeApp(firebaseConfig);
 
-// Fungsi kirim pesan
-    function kirimPesan() {
-      const nama = document.getElementById('chat-name').value;
-      const pesan = document.getElementById('chat-message').value;
-      if (nama && pesan) {
-        db.ref('obrolan').push({
-          nama: nama,
-          pesan: pesan,
-          waktu: new Date().toISOString()
-        });
-        document.getElementById('pesan').value = '';
-      }
+  // Ambil referensi database
+  const db = firebase.database();
+
+  // Kirim pesan ke database
+  document.getElementById('chat-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const nama = document.getElementById('chat-name').value.trim();
+    const pesan = document.getElementById('chat-message').value.trim();
+    if (nama && pesan) {
+      db.ref('obrolan').push({
+        nama: nama,
+        pesan: pesan,
+        waktu: new Date().toISOString()
+      });
+      document.getElementById('chat-message').value = '';
     }
+  });
 
-    // Fungsi tampilkan pesan real-time
-    db.ref('obrolan').on('child_added', function(snapshot) {
-      const data = snapshot.val();
-      const chatBox = document.getElementById('chat-box');
-      const p = document.createElement('p');
-      p.textContent = `${data.nama}: ${data.pesan}`;
-      chatBox.appendChild(p);
-      chatBox.scrollTop = chatBox.scrollHeight;
-    });
-    </script> 
+  // Tampilkan pesan secara real-time
+  db.ref('obrolan').on('child_added', function(snapshot) {
+    const data = snapshot.val();
+    const chatBox = document.getElementById('chat-box');
+    const p = document.createElement('p');
+    p.textContent = `${data.nama}: ${data.pesan}`;
+    chatBox.appendChild(p);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  });
+</script>
   
     // chart
    <script>
