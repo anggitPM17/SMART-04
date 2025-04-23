@@ -253,7 +253,7 @@ const database = firebase.database();
     const nama = document.getElementById('chat-name').value.trim();
     const pesan = document.getElementById('chat-message').value.trim();
     if (nama && pesan) {
-      db.ref('obrolan').push({
+      database.ref('obrolan').push({
         nama: nama,
         pesan: pesan,
         waktu: new Date().toISOString()
@@ -263,7 +263,7 @@ const database = firebase.database();
   });
 
   // Tampilkan pesan secara real-time
-  db.ref('obrolan').on('child_added', function(snapshot) {
+  database.ref('obrolan').on('child_added', function(snapshot) {
     const data = snapshot.val();
     const chatBox = document.getElementById('chat-box');
     const p = document.createElement('p');
