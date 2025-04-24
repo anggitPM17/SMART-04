@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Daftar Akun - Website RT 04</title>
+  <title>Register - Website RT 04</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -16,16 +16,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: 
-        repeating-linear-gradient(
-          45deg,
-          rgba(255, 255, 255, 0.05),
-          rgba(255, 255, 255, 0.05) 2px,
-          transparent 2px,
-          transparent 10px
-        ),
-        linear-gradient(to bottom right, #1e3c72, #ff416c);
-      background-size: cover;
+      background: linear-gradient(to bottom right, #1e3c72, #ff416c);
       color: white;
     }
 
@@ -36,7 +27,6 @@
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
       max-width: 400px;
       width: 100%;
-      backdrop-filter: blur(10px);
     }
 
     h1 {
@@ -74,12 +64,10 @@
       width: 100%;
       cursor: pointer;
       border: none;
-      transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
     .btn:hover {
       background-color: #0086b3;
-      transform: scale(1.02);
     }
 
     .login-link {
@@ -99,6 +87,10 @@
     <h1>Daftar Akun</h1>
     <form id="register-form">
       <div class="input-group">
+        <label for="nama">Nama Lengkap:</label>
+        <input type="text" id="nama" required />
+      </div>
+      <div class="input-group">
         <label for="email">Email:</label>
         <input type="email" id="email" required />
       </div>
@@ -106,13 +98,8 @@
         <label for="password">Password:</label>
         <input type="password" id="password" required />
       </div>
-      <div class="input-group">
-        <label for="captcha">Berapa hasil dari <span id="captcha-question"></span>?</label>
-        <input type="text" id="captcha" required />
-      </div>
       <button type="submit" class="btn">Daftar</button>
     </form>
-
     <div class="login-link">
       <p>Sudah punya akun? <a href="login.html">Login di sini</a></p>
     </div>
@@ -121,6 +108,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA04aNBGGhxep1PH0OvpAM5whg-AiDeLgU",
@@ -134,47 +122,34 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getDatabase(app);
 
-    // Captcha
-    const a = Math.floor(Math.random() * 10) + 1;
-    const b = Math.floor(Math.random() * 10) + 1;
-    const correctAnswer = a + b;
-    document.getElementById('captcha-question').textContent = `${a} + ${b}`;
-
-    // Daftar akun baru
     document.getElementById('register-form').addEventListener('submit', function (e) {
       e.preventDefault();
 
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const captchaInput = parseInt(document.getElementById('captcha').value.trim());
+      const nama = document.getElementById('nama').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-      if (isNaN(captchaInput) || captchaInput !== correctAnswer) {
-        alert('Captcha salah!');
+      if (password.length < 6) {
+        alert('Password harus minimal 6 karakter!');
         return;
       }
 
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+          const user = userCredential.user;
+          // Simpan data tambahan ke Realtime Database
+          set(ref(db, 'warga/' + user.uid), {
+            nama: nama,
+            email: email
+          });
+
           alert('Pendaftaran berhasil! Silakan login.');
           window.location.href = 'login.html';
         })
         .catch((error) => {
-          let message = 'Gagal mendaftar: ';
-          switch (error.code) {
-            case 'auth/email-already-in-use':
-              message += 'Email sudah digunakan.';
-              break;
-            case 'auth/invalid-email':
-              message += 'Format email tidak valid.';
-              break;
-            case 'auth/weak-password':
-              message += 'Password terlalu lemah. Gunakan minimal 6 karakter.';
-              break;
-            default:
-              message += error.message;
-          }
-          alert(message);
+          alert('Terjadi kesalahan: ' + error.message);
         });
     });
   </script>
