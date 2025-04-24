@@ -1,147 +1,44 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login - Website RT 04</title>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-  <!-- Import font Poppins dari Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyA04aNBGGhxep1PH0OvpAM5whg-AiDeLgU",
+    authDomain: "rt04-pkidul.firebaseapp.com",
+    databaseURL: "https://rt04-pkidul-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "rt04-pkidul",
+    storageBucket: "rt04-pkidul.appspot.com",
+    messagingSenderId: "947143736595",
+    appId: "1:947143736595:web:56f3981be0152b2f71c68e"
+  };
 
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: 
-        repeating-linear-gradient(
-          45deg,
-          rgba(255, 255, 255, 0.05),
-          rgba(255, 255, 255, 0.05) 2px,
-          transparent 2px,
-          transparent 10px
-        ),
-        linear-gradient(to bottom right, #1e3c72, #ff416c);
-      background-size: cover;
-      color: white;
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Proses login menggunakan Firebase Authentication
+  document.getElementById('login-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const captchaInput = parseInt(document.getElementById('captcha').value);
+
+    if (captchaInput !== correctAnswer) {
+      alert('Jawaban captcha salah!');
+      return;
     }
 
-    .login-container {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-      max-width: 400px;
-      width: 100%;
-      backdrop-filter: blur(10px);
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 25px;
-      font-weight: 600;
-      font-size: 26px;
-    }
-
-    .input-group {
-      margin-bottom: 15px;
-    }
-
-    .input-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 400;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      background-color: rgba(255,255,255,0.9);
-      color: #000;
-      font-size: 15px;
-    }
-
-    .btn {
-      background-color: #00c3ff;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 500;
-      width: 100%;
-      cursor: pointer;
-      border: none;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .btn:hover {
-      background-color: #0086b3;
-      transform: scale(1.02);
-    }
-
-    #captcha-container {
-      margin-top: 15px;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="login-container">
-    <h1>Website RT 04</h1>
-    <form id="login-form">
-      <div class="input-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" required />
-      </div>
-      <div class="input-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" required />
-      </div>
-      <div class="input-group" id="captcha-container">
-        <label for="captcha">Berapa hasil dari <span id="captcha-question"></span>?</label>
-        <input type="text" id="captcha" required />
-      </div>
-      <button type="submit" class="btn">Login</button>
-    </form>
-  </div>
-
-  <script>
-    // Generate angka acak untuk soal matematika
-    let a = Math.floor(Math.random() * 10) + 1;
-    let b = Math.floor(Math.random() * 10) + 1;
-    let correctAnswer = a + b;
-
-    // Tampilkan soal
-    document.getElementById('captcha-question').textContent = `${a} + ${b}`;
-
-    // Proses login
-    document.getElementById('login-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      const captchaInput = parseInt(document.getElementById('captcha').value);
-
-      if (username === 'warga' && password === 'rt04') {
-        if (captchaInput === correctAnswer) {
-          alert('Login berhasil!');
-          localStorage.setItem('loggedIn', 'true');
-          localStorage.setItem('username', username);
-          window.location.href = 'index.html';
-        } else {
-          alert('Jawaban captcha salah!');
-        }
-      } else {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        alert('Login berhasil!');
+        localStorage.setItem('loggedIn', 'true');
+        localStorage.setItem('username', user.email);
+        window.location.href = 'index.html';  // Ganti dengan halaman tujuan setelah login
+      })
+      .catch((error) => {
         alert('Username atau password salah!');
-      }
-    });
-  </script>
-
-</body>
-</html>
+      });
+  });
+</script>
