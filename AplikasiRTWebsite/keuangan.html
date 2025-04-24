@@ -1,447 +1,202 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neraca Keuangan RT 04 RW 03</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-            text-align: center;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neraca Keuangan RT 04 RW 03</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
 
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 900px;
-            margin: 20px auto;
-        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 20px auto;
+        }
 
-        h1 {
-            color: #333;
-        }
+        h1 {
+            color: #333;
+        }
 
-        .login-container {
-            margin-bottom: 20px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            background-color: #f9f9f9;
-            text-align: left;
-        }
+        .login-container {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            text-align: left;
+        }
 
-        .login-container label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
+        .login-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
 
-        .login-container input[type="text"],
-        .login-container input[type="password"] {
-            width: calc(100% - 12px);
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
 
-        .login-container button {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+        .login-container button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-        .login-container button:hover {
-            background-color: #218838;
-        }
+        .login-container button:hover {
+            background-color: #218838;
+        }
 
-        .input-form {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            background-color: #f9f9f9;
-            text-align: left;
-        }
+        .input-form {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            text-align: left;
+        }
 
-        .input-form label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
+        .input-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
 
-        .input-form input[type="text"],
-        .input-form input[type="number"],
-        .input-form textarea {
-            width: calc(100% - 12px);
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
+        .input-form input[type="text"],
+        .input-form input[type="number"],
+        .input-form textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
 
-        .input-form button {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+        .input-form button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-        .input-form button:hover {
-            background-color: #0056b3;
-        }
+        .input-form button:hover {
+            background-color: #0056b3;
+        }
 
-        .finance-list {
-            margin-top: 20px;
-            border-collapse: collapse;
-            width: 100%;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
+        .finance-list {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
 
-        .finance-list th, .finance-list td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
+        .finance-list th, .finance-list td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
 
-        .finance-list th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-            color: #333;
-        }
+        .finance-list th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            color: #333;
+        }
 
-        .finance-list tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+        .finance-list tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
 
-        .saldo-positif {
-            color: green;
-        }
+        .saldo-positif {
+            color: green;
+        }
 
-        .saldo-negatif {
-            color: red;
-        }
+        .saldo-negatif {
+            color: red;
+        }
 
-        .kembali-button {
-            display: inline-block;
-            background-color: #6c757d;
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
+        .kembali-button {
+            display: inline-block;
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
 
-        .kembali-button:hover {
-            background-color: #5a6268;
-        }
+        .kembali-button:hover {
+            background-color: #5a6268;
+        }
 
-        .admin-area {
-            background-color: #ffe0b2;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-            text-align: left;
-        }
+        .admin-area {
+            background-color: #ffe0b2;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: left;
+        }
 
-        .hidden {
-            display: none;
-        }
+        .hidden {
+            display: none;
+        }
 
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            color: #777;
-        }
-    </style>
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Neraca Keuangan RT 04 RW 03</h1>
+    <div class="container">
+        <h1>Neraca Keuangan RT 04 RW 03</h1>
 
-        <div id="login-section">
-            <h2>Login</h2>
-            <div class="login-container">
-                <label for="username">Username:</label>
-                <input type="text" id="username"><br><br>
-                <label for="password">Password:</label>
-                <input type="password" id="password"><br><br>
-                <button onclick="login()">Login</button>
-                <p id="login-message" style="color: red;"></p>
-            </div>
-        </div>
+        <div id="login-section">
+            <h2>Login</h2>
+            <div class="login-container">
+                <label for="username">Username:</label>
+                <input type="text" id="username"><br><br>
+                <label for="password">Password:</label>
+                <input type="password" id="password"><br><br>
+                <button onclick="login()">Login</button>
+                <p id="login-message" style="color: red;"></p>
+            </div>
+        </div>
 
-        <div id="app-content" class="hidden">
-            <div id="input-section">
-                <h2>Tambah Kegiatan Keuangan</h2>
-                <div class="input-form">
-                    <label for="jenis-kegiatan">Jenis Kegiatan:</label>
-                    <input type="text" id="jenis-kegiatan" name="jenis-kegiatan" required>
+        <div id="app-content" class="hidden">
+            <div id="input-section">
+                <h2>Tambah Kegiatan Keuangan</h2>
+                <div class="input-form">
+                    <label for="jenis-kegiatan">Jenis Kegiatan:</label>
+                    <input type="text" id="jenis-kegiatan" name="jenis-kegiatan" required>
 
-                    <label for="pic">PIC:</label>
-                    <input type="text" id="pic" name="pic">
+                    <label for="pic">PIC:</label>
+                    <input type="text" id="pic" name="pic">
 
-                    <label for="anggaran">Anggaran:</label>
-                    <input type="number" id="anggaran" name="anggaran" value="0">
-
-                    <label for="dana-masuk">Dana Masuk:</label>
-                    <input type="number" id="dana-masuk" name="dana-masuk" value="0">
-
-                    <label for="dana-keluar">Dana Keluar:</label>
-                    <input type="number" id="dana-keluar" name="dana-keluar" value="0">
-
-                    <label for="rincian-kegiatan">Rincian Kegiatan:</label>
-                    <textarea id="rincian-kegiatan" name="rincian-kegiatan"></textarea>
-
-                    <label for="pelaksanaan-kegiatan">Pelaksanaan Kegiatan:</label>
-                    <input type="text" id="pelaksanaan-kegiatan" name="pelaksanaan-kegiatan">
-
-                    <label for="lama-kegiatan">Lama Kegiatan:</label>
-                    <input type="text" id="lama-kegiatan" name="lama-kegiatan">
-
-                    <button type="button" onclick="tambahKegiatan()">Kirim</button>
-                </div>
-            </div>
-
-            <h2>Daftar Kegiatan Keuangan</h2>
-            <table class="finance-list" id="daftar-keuangan">
-                <thead>
-                    <tr>
-                        <th>Jenis Kegiatan</th>
-                        <th>PIC</th>
-                        <th>Anggaran</th>
-                        <th>Dana Masuk</th>
-                        <th>Dana Keluar</th>
-                        <th>Saldo</th>
-                        <th>Rincian Kegiatan</th>
-                        <th>Pelaksanaan Kegiatan</th>
-                        <th>Lama Kegiatan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Iuran Warga</td>
-                        <td>Bendahara RT</td>
-                        <td>Rp 2.500.000</td>
-                        <td>Rp 2.500.000</td>
-                        <td>Rp 0</td>
-                        <td class="saldo-positif">Rp 2.500.000</td>
-                        <td>Pengumpulan iuran bulanan warga</td>
-                        <td>Februari 2025</td>
-                        <td>1 bulan</td>
-                    </tr>
-                    <tr>
-                        <td>Pembelian Alat Kebersihan</td>
-                        <td>Seksi Kebersihan</td>
-                        <td>Rp 600.000</td>
-                        <td>Rp 0</td>
-                        <td>Rp 600.000</td>
-                        <td class="saldo-negatif">Rp -600.000</td>
-                        <td>Pembelian sapu, pel, dan cairan pembersih</td>
-                        <td>15 Februari 2025</td>
-                        <td>1 hari</td>
-                    </tr>
-                    <tr>
-                        <td>Kas Donasi</td>
-                        <td>Ketua RT</td>
-                        <td>Rp 1.200.000</td>
-                        <td>Rp 1.200.000</td>
-                        <td>Rp 0</td>
-                        <td class="saldo-positif">Rp 1.200.000</td>
-                        <td>Donasi dari warga untuk kegiatan sosial</td>
-                        <td>Februari 2025</td>
-                        <td>-</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th colspan="5" style="text-align:right;">Total Saldo:</th>
-                        <th id="total-saldo">Rp 3.100.000</th>
-                        <th colspan="3"></th>
-                    </tr>
-                </tfoot>
-            </table>
-
-            <div id="admin-area" class="admin-area hidden">
-                <h3>Area Admin</h3>
-                <p>Anda memiliki akses penuh untuk mengelola data keuangan.</p>
-            </div>
-
-            <button onclick="logout()" class="kembali-button">Logout</button>
-            <a href="main.html" class="kembali-button">Kembali ke Halaman Utama</a>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2025 Website RT 04 RW 03 Panggung Kidul. Semua Hak Dilindungi.</p>
-    </footer>
-
-    <script>
-        const loginSection = document.getElementById('login-section');
-        const appContent = document.getElementById('app-content');
-        const loginMessage = document.getElementById('login-message');
-        const adminArea = document.getElementById('admin-area');
-        const inputSection = document.getElementById('input-section');
-        const tambahButton = document.querySelector('.input-form button'); // Dapatkan tombol "Kirim"
-
-        // Simulasi data pengguna (JANGAN LAKUKAN INI DI APLIKASI NYATA)
-        const users = [
-            { username: 'user', password: 'userpass', role: 'user' },
-            { username: 'admin', password: 'adminpass', role: 'admin' }
-        ];
-
-        let currentUserRole = null;
-
-        // Saat halaman dimuat, coba login otomatis jika peran tersimpan
-        window.onload = function() {
-            const storedRole = localStorage.getItem('userRole');
-            if (storedRole) {
-                currentUserRole = storedRole;
-                loginSection.classList.add('hidden');
-                appContent.classList.remove('hidden');
-                updateUIAccordingToRole();
-            } else {
-                appContent.classList.add('hidden');
-                loginSection.classList.remove('hidden');
-                // Tambahkan pemanggilan ini
-                updateUIAccordingToRole();
-            }
-        };
-
-        function login() {
-            const usernameInput = document.getElementById('username').value;
-            const passwordInput = document.getElementById('password').value;
-
-            const user = users.find(u => u.username === usernameInput && u.password === passwordInput);
-
-            if (user) {
-                currentUserRole = user.role;
-                localStorage.setItem('userRole', user.role); // Simpan peran (sementara)
-                loginSection.classList.add('hidden');
-                appContent.classList.remove('hidden');
-                updateUIAccordingToRole();
-            } else {
-                loginMessage.textContent = 'Login gagal. Username atau password salah.';
-            }
-        }
-
-        function logout() {
-            currentUserRole = null;
-            localStorage.removeItem('userRole');
-            appContent.classList.add('hidden');
-            loginSection.classList.remove('hidden');
-            loginMessage.textContent = '';
-        }
-
-        function updateUIAccordingToRole() {
-            const storedRole = localStorage.getItem('userRole');
-            if (storedRole === 'admin') {
-                adminArea.classList.remove('hidden');
-                inputSection.classList.remove('hidden');
-                if (tambahButton) {
-                    tambahButton.style.display = 'inline-block'; // Tampilkan tombol "Kirim"
-                }
-            } else {
-                adminArea.classList.add('hidden');
-                inputSection.classList.add('hidden');
-                if (tambahButton) {
-                    tambahButton.style.display = 'none'; // Sembunyikan tombol "Kirim"
-                }
-            }
-        }
-
-        function formatRupiah(angka) {
-            const numberFormat = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            });
-            return numberFormat.format(angka);
-        }
-
-        function tambahKegiatan() {
-            // Fungsi tambah kegiatan seperti sebelumnya
-            const jenisKegiatan = document.getElementById("jenis-kegiatan").value;
-            const pic = document.getElementById("pic").value;
-            const anggaran = parseFloat(document.getElementById("anggaran").value) || 0;
-            const danaMasuk = parseFloat(document.getElementById("dana-masuk").value) || 0;
-            const danaKeluar = parseFloat(document.getElementById("dana-keluar").value) || 0;
-            const rincianKegiatan = document.getElementById("rincian-kegiatan").value;
-            const pelaksanaanKegiatan = document.getElementById("pelaksanaan-kegiatan").value;
-            const lamaKegiatan = document.getElementById("lama-kegiatan").value;
-
-            const saldo = danaMasuk - danaKeluar;
-
-            const table = document.getElementById("daftar-keuangan").getElementsByTagName('tbody')[0];
-            const newRow = table.insertRow(table.rows.length);
-
-            const cellJenis = newRow.insertCell(0);
-            const cellPic = newRow.insertCell(1);
-            const cellAnggaran = newRow.insertCell(2);
-            const cellDanaMasuk = newRow.insertCell(3);
-            const cellDanaKeluar = newRow.insertCell(4);
-            const cellSaldo = newRow.insertCell(5);
-            const cellRincian = newRow.insertCell(6);
-            const cellPelaksanaan = newRow.insertCell(7);
-            const cellLama = newRow.insertCell(8);
-
-            cellJenis.innerHTML = jenisKegiatan;
-            cellPic.innerHTML = pic;
-            cellAnggaran.innerHTML = formatRupiah(anggaran);
-            cellDanaMasuk.innerHTML = formatRupiah(danaMasuk);
-            cellDanaKeluar.innerHTML = formatRupiah(danaKeluar);
-            cellSaldo.innerHTML = formatRupiah(saldo);
-            if (saldo > 0) {
-                cellSaldo.classList.add("saldo-positif");
-            } else if (saldo < 0) {
-                cellSaldo.classList.add("saldo-negatif");
-            }
-            cellRincian.innerHTML = rincianKegiatan;
-            cellPelaksanaan.innerHTML = pelaksanaanKegiatan;
-            cellLama.innerHTML = lamaKegiatan;
-
-            // Bersihkan form setelah ditambahkan
-            document.getElementById("jenis-kegiatan").value = "";
-            document.getElementById("pic").value = "";
-            document.getElementById("anggaran").value = "0";
-            document.getElementById("dana-masuk").value = "0";
-            document.getElementById("dana-keluar").value = "0";
-            document.getElementById("rincian-kegiatan").value = "";
-            document.getElementById("pelaksanaan-kegiatan").value = "";
-            document.getElementById("lama-kegiatan").value = "";
-
-            updateTotalSaldo();
-        }
-
-        function updateTotalSaldo() {
-            const table = document.getElementById("daftar-keuangan").getElementsByTagName('tbody')[0];
-            let totalSaldo = 0;
-            for (let i = 0; i < table.rows.length; i++) {
-                const saldoCell = table.rows[i].cells[5];
-                const saldoText = saldoCell.textContent.replace('Rp', '').replaceAll('.', '').trim();
-                totalSaldo += parseFloat(saldoText) || 0;
-            }
-            document.getElementById("total-saldo").textContent = formatRupiah(totalSaldo);
-            if (totalSaldo > 0) {
-                document.getElementById("total-saldo").classList.remove("saldo-negatif");
-                document.getElementById("total-saldo").classList.add("saldo-positif");
-            } else if (totalSaldo < 0) {
+                    <label for="anggaran">Anggaran:</label>
