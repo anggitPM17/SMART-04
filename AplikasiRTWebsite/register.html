@@ -130,6 +130,12 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
+      // Validasi password (minimal 6 karakter)
+      if (password.length < 6) {
+        alert('Password harus minimal 6 karakter!');
+        return;
+      }
+
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
