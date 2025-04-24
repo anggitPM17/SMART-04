@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Register - Website RT 04</title>
 
-  <!-- Import font Poppins dari Google Fonts -->
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
@@ -17,16 +17,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: 
-        repeating-linear-gradient(
-          45deg,
-          rgba(255, 255, 255, 0.05),
-          rgba(255, 255, 255, 0.05) 2px,
-          transparent 2px,
-          transparent 10px
-        ),
-        linear-gradient(to bottom right, #1e3c72, #ff416c);
-      background-size: cover;
+      background: linear-gradient(to bottom right, #1e3c72, #ff416c);
       color: white;
     }
 
@@ -37,7 +28,6 @@
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
       max-width: 400px;
       width: 100%;
-      backdrop-filter: blur(10px);
     }
 
     h1 {
@@ -54,7 +44,6 @@
     .input-group label {
       display: block;
       margin-bottom: 6px;
-      font-weight: 400;
     }
 
     .input-group input {
@@ -73,18 +62,19 @@
       padding: 12px 24px;
       border-radius: 8px;
       font-size: 16px;
-      font-weight: 500;
       width: 100%;
       cursor: pointer;
       border: none;
-      transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
     .btn:hover {
       background-color: #0086b3;
-      transform: scale(1.02);
     }
 
+    p {
+      text-align: center;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -102,14 +92,14 @@
       </div>
       <button type="submit" class="btn">Daftar</button>
     </form>
+    <p>Sudah punya akun? <a href="login.html" style="color: #00c3ff;">Login di sini</a></p>
   </div>
-  <p>Sudah punya akun? <a href="login.html" style="color: #00c3ff;">Login di sini</a></p>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-    // Firebase config
+    // Ganti ini dengan konfigurasi Firebase milik Anda
     const firebaseConfig = {
       apiKey: "AIzaSyA04aNBGGhxep1PH0OvpAM5whg-AiDeLgU",
       authDomain: "rt04-pkidul.firebaseapp.com",
@@ -123,14 +113,11 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Proses pendaftaran
     document.getElementById('register-form').addEventListener('submit', function (e) {
       e.preventDefault();
-
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
-      // Validasi password (minimal 6 karakter)
       if (password.length < 6) {
         alert('Password harus minimal 6 karakter!');
         return;
@@ -138,12 +125,25 @@
 
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          const user = userCredential.user;
           alert('Pendaftaran berhasil! Silakan login.');
-          window.location.href = 'login.html';  // Arahkan ke halaman login setelah pendaftaran
+          window.location.href = 'login.html';
         })
         .catch((error) => {
-          alert('Terjadi kesalahan: ' + error.message);
+          let message = 'Terjadi kesalahan: ';
+          switch (error.code) {
+            case 'auth/email-already-in-use':
+              message += 'Email sudah digunakan.';
+              break;
+            case 'auth/invalid-email':
+              message += 'Email tidak valid.';
+              break;
+            case 'auth/weak-password':
+              message += 'Password terlalu lemah.';
+              break;
+            default:
+              message += error.message;
+          }
+          alert(message);
         });
     });
   </script>
