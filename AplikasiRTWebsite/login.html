@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Website RT 04</title>
 
-  <!-- Import font Poppins dari Google Fonts -->
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
@@ -54,7 +54,6 @@
     .input-group label {
       display: block;
       margin-bottom: 6px;
-      font-weight: 400;
     }
 
     .input-group input {
@@ -73,7 +72,6 @@
       padding: 12px 24px;
       border-radius: 8px;
       font-size: 16px;
-      font-weight: 500;
       width: 100%;
       cursor: pointer;
       border: none;
@@ -103,11 +101,11 @@
 <body>
 
   <div class="login-container">
-    <h1>Website RT 04</h1>
+    <h1>Login ke RT 04</h1>
     <form id="login-form">
       <div class="input-group">
-        <label for="username">Email:</label>
-        <input type="email" id="username" required />
+        <label for="email">Email:</label>
+        <input type="email" id="email" required />
       </div>
       <div class="input-group">
         <label for="password">Password:</label>
@@ -129,7 +127,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-    // Firebase config
+    // Firebase config (ganti sesuai proyekmu)
     const firebaseConfig = {
       apiKey: "AIzaSyA04aNBGGhxep1PH0OvpAM5whg-AiDeLgU",
       authDomain: "rt04-pkidul.firebaseapp.com",
@@ -143,21 +141,23 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Generate angka acak untuk soal matematika
-    let a = Math.floor(Math.random() * 10) + 1;
-    let b = Math.floor(Math.random() * 10) + 1;
-    let correctAnswer = a + b;
-
-    // Tampilkan soal captcha
+    // Captcha
+    const a = Math.floor(Math.random() * 10) + 1;
+    const b = Math.floor(Math.random() * 10) + 1;
+    const correctAnswer = a + b;
     document.getElementById('captcha-question').textContent = `${a} + ${b}`;
 
-    // Proses login menggunakan Firebase Authentication
     document.getElementById('login-form').addEventListener('submit', function (e) {
       e.preventDefault();
 
-      const email = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      const captchaInput = parseInt(document.getElementById('captcha').value);
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const captchaInput = parseInt(document.getElementById('captcha').value.trim());
+
+      if (isNaN(captchaInput)) {
+        alert('Captcha hanya boleh diisi angka!');
+        return;
+      }
 
       if (captchaInput !== correctAnswer) {
         alert('Jawaban captcha salah!');
@@ -170,10 +170,24 @@
           alert('Login berhasil!');
           localStorage.setItem('loggedIn', 'true');
           localStorage.setItem('username', user.email);
-          window.location.href = 'index.html';  // Ganti dengan halaman tujuan setelah login
+          window.location.href = 'index.html';
         })
         .catch((error) => {
-          alert('Username atau password salah!');
+          let message = 'Terjadi kesalahan: ';
+          switch (error.code) {
+            case 'auth/user-not-found':
+              message += 'Pengguna tidak ditemukan.';
+              break;
+            case 'auth/wrong-password':
+              message += 'Password salah.';
+              break;
+            case 'auth/invalid-email':
+              message += 'Email tidak valid.';
+              break;
+            default:
+              message += error.message;
+          }
+          alert(message);
         });
     });
   </script>
