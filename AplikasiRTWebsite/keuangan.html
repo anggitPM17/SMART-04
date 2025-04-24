@@ -295,145 +295,153 @@
     </footer>
 
     <script>
-        const loginSection = document.getElementById('login-section');
-        const appContent = document.getElementById('app-content');
-        const loginMessage = document.getElementById('login-message');
-        const adminArea = document.getElementById('admin-area');
-        const inputSection = document.getElementById('input-section');
-        const tambahButton = document.querySelector('.input-form button'); // Dapatkan tombol "Kirim"
+        const loginSection = document.getElementById('login-section');
+        const appContent = document.getElementById('app-content');
+        const loginMessage = document.getElementById('login-message');
+        const adminArea = document.getElementById('admin-area');
+        const inputSection = document.getElementById('input-section');
+        const tambahButton = document.querySelector('.input-form button'); // Dapatkan tombol "Kirim"
 
-        // Simulasi data pengguna (JANGAN LAKUKAN INI DI APLIKASI NYATA)
-        const users = [
-            { username: 'user', password: 'userpass', role: 'user' },
-            { username: 'admin', password: 'adminpass', role: 'admin' }
-        ];
+        // Simulasi data pengguna (JANGAN LAKUKAN INI DI APLIKASI NYATA)
+        const users = [
+            { username: 'user', password: 'userpass', role: 'user' },
+            { username: 'admin', password: 'adminpass', role: 'admin' }
+        ];
 
-        let currentUserRole = null;
+        let currentUserRole = null;
 
-        // Saat halaman dimuat, coba login otomatis jika peran tersimpan
-        window.onload = function() {
-            const storedRole = localStorage.getItem('userRole');
-            if (storedRole) {
-                currentUserRole = storedRole;
-                loginSection.classList.add('hidden');
-                appContent.classList.remove('hidden');
-                updateUIAccordingToRole();
-            } else {
-                appContent.classList.add('hidden');
-                loginSection.classList.remove('hidden');
-            }
-        };
+        // Saat halaman dimuat, coba login otomatis jika peran tersimpan
+        window.onload = function() {
+            const storedRole = localStorage.getItem('userRole');
+            if (storedRole) {
+                currentUserRole = storedRole;
+                loginSection.classList.add('hidden');
+                appContent.classList.remove('hidden');
+                updateUIAccordingToRole();
+            } else {
+                appContent.classList.add('hidden');
+                loginSection.classList.remove('hidden');
+                // Tambahkan pemanggilan ini
+                updateUIAccordingToRole();
+            }
+        };
 
-        function login() {
-            const usernameInput = document.getElementById('username').value;
-            const passwordInput = document.getElementById('password').value;
+        function login() {
+            const usernameInput = document.getElementById('username').value;
+            const passwordInput = document.getElementById('password').value;
 
-            const user = users.find(u => u.username === usernameInput && u.password === passwordInput);
+            const user = users.find(u => u.username === usernameInput && u.password === passwordInput);
 
-            if (user) {
-                currentUserRole = user.role;
-                localStorage.setItem('userRole', user.role); // Simpan peran (sementara)
-                loginSection.classList.add('hidden');
-                appContent.classList.remove('hidden');
-                updateUIAccordingToRole();
-            } else {
-                loginMessage.textContent = 'Login gagal. Username atau password salah.';
-            }
-        }
+            if (user) {
+                currentUserRole = user.role;
+                localStorage.setItem('userRole', user.role); // Simpan peran (sementara)
+                loginSection.classList.add('hidden');
+                appContent.classList.remove('hidden');
+                updateUIAccordingToRole();
+            } else {
+                loginMessage.textContent = 'Login gagal. Username atau password salah.';
+            }
+        }
 
-        function logout() {
-            currentUserRole = null;
-            localStorage.removeItem('userRole');
-            appContent.classList.add('hidden');
-            loginSection.classList.remove('hidden');
-            loginMessage.textContent = '';
-        }
+        function logout() {
+            currentUserRole = null;
+            localStorage.removeItem('userRole');
+            appContent.classList.add('hidden');
+            loginSection.classList.remove('hidden');
+            loginMessage.textContent = '';
+        }
 
-        function updateUIAccordingToRole() {
-            const storedRole = localStorage.getItem('userRole');
-            if (storedRole === 'admin') {
-                adminArea.classList.remove('hidden');
-                inputSection.classList.remove('hidden');
-                if (tambahButton) {
-                    tambahButton.style.display = 'inline-block'; // Tampilkan tombol "Kirim"
-                }
-            } else {
-                adminArea.classList.add('hidden');
-                inputSection.classList.add('hidden');
-                if (tambahButton) {
-                    tambahButton.style.display = 'none'; // Sembunyikan tombol "Kirim"
-                }
-            }
-        }
+        function updateUIAccordingToRole() {
+            const storedRole = localStorage.getItem('userRole');
+            if (storedRole === 'admin') {
+                adminArea.classList.remove('hidden');
+                inputSection.classList.remove('hidden');
+                if (tambahButton) {
+                    tambahButton.style.display = 'inline-block'; // Tampilkan tombol "Kirim"
+                }
+            } else {
+                adminArea.classList.add('hidden');
+                inputSection.classList.add('hidden');
+                if (tambahButton) {
+                    tambahButton.style.display = 'none'; // Sembunyikan tombol "Kirim"
+                }
+            }
+        }
 
-        function formatRupiah(angka) {
-            const numberFormat = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            });
-            return numberFormat.format(angka);
-        }
+        function formatRupiah(angka) {
+            const numberFormat = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+            return numberFormat.format(angka);
+        }
 
-        function tambahKegiatan() {
-            // Fungsi tambah kegiatan seperti sebelumnya
-            const jenisKegiatan = document.getElementById("jenis-kegiatan").value;
-            const pic = document.getElementById("pic").value;
-            const anggaran = parseFloat(document.getElementById("anggaran").value) || 0;
-            const danaMasuk = parseFloat(document.getElementById("dana-masuk").value) || 0;
-            const danaKeluar = parseFloat(document.getElementById("dana-keluar").value) || 0;
-            const rincianKegiatan = document.getElementById("rincian-kegiatan").value;
-            const pelaksanaanKegiatan = document.getElementById("pelaksanaan-kegiatan").value;
-            const lamaKegiatan = document.getElementById("lama-kegiatan").value;
+        function tambahKegiatan() {
+            // Fungsi tambah kegiatan seperti sebelumnya
+            const jenisKegiatan = document.getElementById("jenis-kegiatan").value;
+            const pic = document.getElementById("pic").value;
+            const anggaran = parseFloat(document.getElementById("anggaran").value) || 0;
+            const danaMasuk = parseFloat(document.getElementById("dana-masuk").value) || 0;
+            const danaKeluar = parseFloat(document.getElementById("dana-keluar").value) || 0;
+            const rincianKegiatan = document.getElementById("rincian-kegiatan").value;
+            const pelaksanaanKegiatan = document.getElementById("pelaksanaan-kegiatan").value;
+            const lamaKegiatan = document.getElementById("lama-kegiatan").value;
 
-            const saldo = danaMasuk - danaKeluar;
+            const saldo = danaMasuk - danaKeluar;
 
-            const table = document.getElementById("daftar-keuangan").getElementsByTagName('tbody')[0];
-            const newRow = table.insertRow(table.rows.length);
+            const table = document.getElementById("daftar-keuangan").getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow(table.rows.length);
 
-            const cellJenis = newRow.insertCell(0);
-            const cellPic = newRow.insertCell(1);
-            const cellAnggaran = newRow.insertCell(2);
-            const cellDanaMasuk = newRow.insertCell(3);
-            const cellDanaKeluar = newRow.insertCell(4);
-            const cellSaldo = newRow.insertCell(5);
-            const cellRincian = newRow.insertCell(6);
-            const cellPelaksanaan = newRow.insertCell(7);
-            const cellLama = newRow.insertCell(8);
+            const cellJenis = newRow.insertCell(0);
+            const cellPic = newRow.insertCell(1);
+            const cellAnggaran = newRow.insertCell(2);
+            const cellDanaMasuk = newRow.insertCell(3);
+            const cellDanaKeluar = newRow.insertCell(4);
+            const cellSaldo = newRow.insertCell(5);
+            const cellRincian = newRow.insertCell(6);
+            const cellPelaksanaan = newRow.insertCell(7);
+            const cellLama = newRow.insertCell(8);
 
-            cellJenis.innerHTML = jenisKegiatan;
-            cellPic.innerHTML = pic;
-            cellAnggaran.innerHTML = formatRupiah(anggaran);
-            cellDanaMasuk.innerHTML = formatRupiah(danaMasuk);
-            cellDanaKeluar.innerHTML = formatRupiah(danaKeluar);
-            cellSaldo.innerHTML = formatRupiah(saldo);
-            if (saldo > 0) {
-                cellSaldo.classList.add("saldo-positif");
-            } else if (saldo < 0) {
-                cellSaldo.classList.add("saldo-negatif");
-            }
-            cellRincian.innerHTML = rincianKegiatan;
-            cellPelaksanaan.innerHTML = pelaksanaanKegiatan;
-            cellLama.innerHTML = lamaKegiatan;
+            cellJenis.innerHTML = jenisKegiatan;
+            cellPic.innerHTML = pic;
+            cellAnggaran.innerHTML = formatRupiah(anggaran);
+            cellDanaMasuk.innerHTML = formatRupiah(danaMasuk);
+            cellDanaKeluar.innerHTML = formatRupiah(danaKeluar);
+            cellSaldo.innerHTML = formatRupiah(saldo);
+            if (saldo > 0) {
+                cellSaldo.classList.add("saldo-positif");
+            } else if (saldo < 0) {
+                cellSaldo.classList.add("saldo-negatif");
+            }
+            cellRincian.innerHTML = rincianKegiatan;
+            cellPelaksanaan.innerHTML = pelaksanaanKegiatan;
+            cellLama.innerHTML = lamaKegiatan;
 
-            // Bersihkan form setelah ditambahkan
-            document.getElementById("jenis-kegiatan").value = "";
-            document.getElementById("pic").value = "";
-            document.getElementById("anggaran").value = "0";
-            document.getElementById("dana-masuk").value = "0";
-            document.getElementById("dana-keluar").value = "0";
-            document.getElementById("rincian-kegiatan").value = "";
-            document.getElementById("pelaksanaan-kegiatan").value = "";
-            document.getElementById("lama-kegiatan").value = "";
+            // Bersihkan form setelah ditambahkan
+            document.getElementById("jenis-kegiatan").value = "";
+            document.getElementById("pic").value = "";
+            document.getElementById("anggaran").value = "0";
+            document.getElementById("dana-masuk").value = "0";
+            document.getElementById("dana-keluar").value = "0";
+            document.getElementById("rincian-kegiatan").value = "";
+            document.getElementById("pelaksanaan-kegiatan").value = "";
+            document.getElementById("lama-kegiatan").value = "";
 
-            updateTotalSaldo();
-        }
+            updateTotalSaldo();
+        }
 
-        function updateTotalSaldo() {
-            const table = document.getElementById("daftar-keuangan").getElementsByTagName('tbody')[0];
-            let totalSaldo = 0;
-            for (let i = 0; i < table.rows.length; i++) {
-                const saldoCell = table.rows[i].cells[5];
-                const saldoText = saldoCell.textContent.replace('Rp', '').replaceAll('.', '').trim();
-                totalSaldo += parseFloat(saldoText
+        function updateTotalSaldo() {
+            const table = document.getElementById("daftar-keuangan").getElementsByTagName('tbody')[0];
+            let totalSaldo = 0;
+            for (let i = 0; i < table.rows.length; i++) {
+                const saldoCell = table.rows[i].cells[5];
+                const saldoText = saldoCell.textContent.replace('Rp', '').replaceAll('.', '').trim();
+                totalSaldo += parseFloat(saldoText) || 0;
+            }
+            document.getElementById("total-saldo").textContent = formatRupiah(totalSaldo);
+            if (totalSaldo > 0) {
+                document.getElementById("total-saldo").classList.remove("saldo-negatif");
+                document.getElementById("total-saldo").classList.add("saldo-positif");
+            } else if (totalSaldo < 0) {
