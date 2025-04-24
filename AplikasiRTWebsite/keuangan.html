@@ -15,6 +15,18 @@
       text-align: center;
     }
 
+    #user-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 800px;
+      margin: 0 auto 10px;
+    }
+
+    #user-email {
+      font-weight: bold;
+    }
+
     form, table {
       max-width: 800px;
       margin: 20px auto;
@@ -73,6 +85,11 @@
   </style>
 </head>
 <body>
+  <div id="user-info">
+    <span id="user-email"></span>
+    <button onclick="logout()">Logout</button>
+  </div>
+
   <h1>Neraca Keuangan RT 04 RW 03</h1>
 
   <form id="form-kegiatan">
@@ -126,13 +143,11 @@
     </tfoot>
   </table>
 
-  <!-- Firebase SDK -->
   <script type="module">
-    // Firebase SDK import
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-    // Konfigurasi Firebase kamu
     const firebaseConfig = {
       apiKey: "AIzaSyA04aNBGGhxep1PH0OvpAM5whg-AiDeLgU",
       authDomain: "rt04-pkidul.firebaseapp.com",
@@ -145,8 +160,26 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+    const auth = getAuth(app);
 
-    // Fungsi format uang
+    // Autentikasi dan proteksi halaman
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById("user-email").textContent = `Login sebagai: ${user.email}`;
+      } else {
+        alert("Kamu belum login. Akan diarahkan ke halaman login.");
+        window.location.href = "login.html";
+      }
+    });
+
+    // Fungsi logout
+    window.logout = function () {
+      signOut(auth).then(() => {
+        window.location.href = "login.html";
+      });
+    };
+
+    // Format rupiah
     function formatRupiah(angka) {
       return new Intl.NumberFormat('id-ID', {
         style: 'currency',
@@ -154,7 +187,7 @@
       }).format(angka);
     }
 
-    // Tambah kegiatan ke Firebase
+    // Tambah data
     document.getElementById("form-kegiatan").addEventListener("submit", function(e) {
       e.preventDefault();
 
@@ -174,7 +207,7 @@
       this.reset();
     });
 
-    // Ambil data dari Firebase
+    // Tampilkan data
     const tbody = document.querySelector("#daftar-keuangan tbody");
 
     onValue(ref(db, "keuangan"), snapshot => {
